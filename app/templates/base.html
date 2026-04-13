@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}School CRM{% endblock %}</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/htmx.org@1.9.10"></script>
+</head>
+<body class="bg-gray-100 min-h-screen">
+    <nav class="bg-blue-600 text-white p-4 shadow-md">
+        <div class="container mx-auto flex justify-between items-center">
+            <h1 class="text-xl font-bold">🏫 School Support CRM</h1>
+            <div class="space-x-4">
+                <a href="/" class="hover:underline">Dashboard</a>
+                <a href="/tickets" class="hover:underline">Tickets</a>
+                <a href="/categories" class="hover:underline">Categories</a>
+            </div>
+        </div>
+    </nav>
+    
+    <main class="container mx-auto p-6">
+        {% block content %}{% endblock %}
+    </main>
+    
+    <footer class="bg-gray-800 text-white text-center p-4 mt-8">
+        <p>&copy; 2025 School Support CRM</p>
+    </footer>
+</body>
+</html>
