@@ -1,0 +1,71 @@
+{% extends "base.html" %}
+
+{% block title %}{{ title }} - School CRM{% endblock %}
+
+{% block content %}
+<div class="max-w-2xl mx-auto">
+    <div class="mb-4">
+        <a href="/tickets" class="text-blue-600 hover:underline">&larr; Back to Tickets</a>
+    </div>
+    
+    <div class="bg-white rounded-lg shadow-md p-6">
+        <h2 class="text-2xl font-bold text-gray-800 mb-6">{{ title }}</h2>
+        
+        <form method="POST" action="{{ action }}">
+            <div class="mb-4">
+                <label class="block text-gray-700 font-medium mb-2">Title</label>
+                <input type="text" name="title" value="{{ ticket.title if ticket else '' }}" 
+                    class="w-full border rounded p-2 focus:outline-none focus:ring-2 focus:ring-blue-500" required>
+            </div>
+            
+            <div class="mb-4">
+                <label class="block text-gray-700 font-medium mb-2">Description</label>
+                <textarea name="description" rows="5" 
+                    class="w-full border rounded p-2 focus:outline-none focus:ring-2 focus:ring-blue-500" required>{{ ticket.description if ticket else '' }}</textarea>
+            </div>
+            
+            <div class="grid grid-cols-2 gap-4 mb-4">
+                <div>
+                    <label class="block text-gray-700 font-medium mb-2">Priority</label>
+                    <select name="priority" class="w-full border rounded p-2 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                        <option value="low" {% if ticket and ticket.priority == 'low' %}selected{% endif %}>Low</option>
+                        <option value="medium" {% if ticket and ticket.priority == 'medium' %}selected{% endif %}>Medium</option>
+                        <option value="high" {% if ticket and ticket.priority == 'high' %}selected{% endif %}>High</option>
+                    </select>
+                </div>
+                
+                <div>
+                    <label class="block text-gray-700 font-medium mb-2">Category</label>
+                    <select name="category_id" class="w-full border rounded p-2 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                        <option value="">Uncategorized</option>
+                        {% for category in categories %}
+                        <option value="{{ category.id }}" {% if ticket and ticket.category_id == category.id %}selected{% endif %}>
+                            {{ category.name }}
+                        </option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+            
+            {% if ticket and edit_mode %}
+            <div class="mb-4">
+                <label class="block text-gray-700 font-medium mb-2">Status</label>
+                <select name="status" class="w-full border rounded p-2 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                    <option value="open" {% if ticket and ticket.status == 'open' %}selected{% endif %}>Open</option>
+                    <option value="in_progress" {% if ticket and ticket.status == 'in_progress' %}selected{% endif %}>In Progress</option>
+                    <option value="resolved" {% if ticket and ticket.status == 'resolved' %}selected{% endif %}>Resolved</option>
+                    <option value="closed" {% if ticket and ticket.status == 'closed' %}selected{% endif %}>Closed</option>
+                </select>
+            </div>
+            {% endif %}
+            
+            <div class="flex space-x-2">
+                <button type="submit" class="bg-blue-600 text-white px-6 py-2 rounded hover:bg-blue-700">
+                    {{ 'Update' if edit_mode else 'Create' }}
+                </button>
+                <a href="/tickets" class="bg-gray-300 text-gray-700 px-6 py-2 rounded hover:bg-gray-400">Cancel</a>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}
