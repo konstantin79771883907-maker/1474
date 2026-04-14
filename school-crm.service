@@ -1,0 +1,19 @@
+[Unit]
+Description=School Support CRM Service
+After=network.target
+
+[Service]
+Type=simple
+User=www-data
+WorkingDirectory=/workspace
+Environment="PATH=/usr/local/bin:/usr/bin:/bin"
+ExecStart=/usr/local/bin/uvicorn main:app --host 0.0.0.0 --port 8000
+Restart=always
+RestartSec=3
+
+# Опционально: логирование
+StandardOutput=append:/var/log/school-crm.log
+StandardError=append:/var/log/school-crm-error.log
+
+[Install]
+WantedBy=multi-user.target
