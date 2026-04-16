@@ -1,0 +1,22 @@
+[Unit]
+Description=School CRM Deploy Hook Service
+After=network.target
+
+[Service]
+Type=simple
+User=www-data
+WorkingDirectory=/workspace
+Environment="PATH=/usr/local/bin:/usr/bin:/bin"
+Environment="WEBHOOK_SECRET=your-secret-key-change-in-production"
+Environment="REPO_PATH=/workspace"
+Environment="SERVICE_NAME=school-crm"
+ExecStart=/usr/local/bin/uvicorn deploy_hook:app --host 0.0.0.0 --port 8001
+Restart=always
+RestartSec=3
+
+# Опционально: логирование
+StandardOutput=append:/var/log/school-crm-hook.log
+StandardError=append:/var/log/school-crm-hook-error.log
+
+[Install]
+WantedBy=multi-user.target

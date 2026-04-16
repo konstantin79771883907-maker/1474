@@ -2,7 +2,7 @@ from fastapi import APIRouter, Depends, HTTPException
 from sqlmodel import Session, select
 from typing import List
 from app.database import get_session
-from app.models.db import Comment, Ticket
+from app.models.db import Comment, Ticket, User
 from app.schemas.schemas import CommentCreate, CommentRead
 
 router = APIRouter(prefix="/comments", tags=["comments"])
